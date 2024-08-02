@@ -4,7 +4,7 @@ from ultralytics import YOLO
 import os
 from threading import Thread
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 # yolov8n 모델 로드
 model = YOLO('/Users/skaigroove/WorkSpace/mosiac_module/models/best.pt')
@@ -49,6 +49,7 @@ def process_video(file_path, output_path='static/uploads/output.mp4'):
     out.release()
     progress = 100  # 완료되면 100%로 설정
     print(f"Processing complete. Output saved to {output_path}")  # 출력 파일 경로 로그 출력
+    print(f"File exists: {os.path.exists(output_path)}")  # 파일 존재 여부 확인
     return output_path
 
 
@@ -94,6 +95,15 @@ def download_file():
         return send_file(file_path, as_attachment=True, mimetype='video/mp4', download_name=download)
     else:
         print(f"File not found: {file_path}")  # 파일이 없을 때 로그 출력
+        return "File not found", 404
+
+
+@app.route('/static/uploads/output.mp4', methods=['GET'])
+def serve_video():
+    file_path = 'static/uploads/output.mp4'
+    if os.path.exists(file_path):
+        return send_file(file_path, mimetype='video/mp4')
+    else:
         return "File not found", 404
 
 

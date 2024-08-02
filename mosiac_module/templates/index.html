@@ -17,7 +17,7 @@
 <div class="uploadContainer">
     <div class="text">
         <p>Simple convert</p>
-        <p>to face mosaic.</p>
+        <p>to face mosaic</p>
         <p>Upload your Video!</p>
     </div>
     <div class="uploadSection">
@@ -29,14 +29,14 @@
         <div class="uploadCaution">
             <p>Be careful with file sizes</p>
             <p>You can only upload files</p>
-            <p>that are 100 MB or less</p>
+            <p>that are <strong>100MB</strong> or less</p>
         </div>
     </div>
 </div>
 <div class="videoContainer">
     <div class="sampleContainer">
         <div class="sample-video-wrapper">
-            <video id="videoPreviewer" controls></video>
+            <video id="videoPreviewer" autoplay controls></video>
         </div>
         <div class="downloadSection" id="downloadSection" style="display: none;">
             <div class="processing">
@@ -48,7 +48,9 @@
     </div>
     <div class="outputContainer">
         <div class="output-video-wrapper">
-            <video class="outputVideo" id="outputVideo" controls></video>
+            <video id="outputVideo" autoplay controls>
+                <source src="../static/uploads/output.mp4" type="video/mp4">
+            </video>
         </div>
     </div>
 </div>

@@ -103,9 +103,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function displayProcessedVideo() {
-        const videoUrl = '/static/uploads/output.mp4'; // 서버의 비디오 파일 절대 경로
+        const videoUrl = 'uploads/output.mp4'; // 서버의 비디오 파일 절대 경로
         console.log(`Setting video source to: ${videoUrl}`); // 로그 추가
         outputVideo.src = videoUrl;
+        outputVideo.addEventListener('error', function(e) {
+            console.error('Error loading video:', e);
+        });
+        outputVideo.addEventListener('canplay', function() {
+            console.log('Video can play');
+        });
+        outputVideo.load(); // 비디오 로드 시도
         outputVideo.style.display = 'block';
         console.log('Video should now be visible'); // 로그 추가
     }

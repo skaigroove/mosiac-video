@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Luckiest+Guy&family=Permanent+Marker&display=swap');
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
@@ -26,11 +29,16 @@ body {
     font-size: 4em;
     margin-bottom: 10px;
     display: inline-block;
+    font-family: 'Cinzel', cursive;
 }
 
 .uploadContainer p {
     font-size: 1em;
     margin: 5px 0;
+}
+
+.uploadCaution p{
+    font-family: "Cinzel", 'cursive';
 }
 
 .uploadSection {
@@ -45,13 +53,14 @@ body {
     padding: 2em 3em;
     text-transform: uppercase;
     cursor: pointer;
+    font-family: 'Luckiest Guy', cursive;
 }
 
 .uploadSection img {
     position: absolute;
     width: 8em;
     height: 8em;
-    left: 64.13em;
+    left: 79.5em;
     top: 7.5em;
 }
 
@@ -73,7 +82,7 @@ body {
 }
 
 .sampleContainer {
-    margin: 1em 2em;
+    margin: 2em 3em;
     padding: 20px;
 }
 
@@ -104,14 +113,14 @@ body {
 
 .sample-video-wrapper video {
     max-width: 100%;
-    height: 15em;
+    height: 17em;
     display: flex;
     padding-bottom: 1.5em;
 }
 
 .output-video-wrapper video {
     max-width: 100%;
-    height: 18em;
+    height: 22em;
     display: flex;
 }
 
@@ -146,6 +155,7 @@ body {
 .processing p {
     margin: 0;
     font-size: 1em;
+    font-family: 'Luckiest Guy', cursive;
 }
 
 .downloadButton {
@@ -156,6 +166,7 @@ body {
     cursor: pointer;
     text-transform: uppercase;
     padding: 1em 2em;
+    font-family: 'Luckiest Guy', cursive;
 }
 
 /* Rotation animation */
