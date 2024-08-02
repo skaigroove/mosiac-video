@@ -1,15 +1,60 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Mosaic</title>
+    <title>Mosaic Cat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
-<h1>Upload a Video for Mosaic Processing</h1>
-<form action="/process" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" accept="video/*" required>
-    <button type="submit">Upload and Process</button>
-</form>
+
+<div class="header">
+    <p>MOSAIC CAT</p>
+</div>
+
+<div class="uploadContainer">
+    <div class="text">
+        <p>Simple convert</p>
+        <p>to face mosaic.</p>
+        <p>Upload your Video!</p>
+    </div>
+    <div class="uploadSection">
+        <img src="{{ url_for('static', filename='images/lying_cat.png') }}" alt="cat">
+        <div class="uploadButton">
+            <p>Upload Video</p>
+        </div>
+        <input type="file" id="fileInput" name="file" accept="video/*" style="display: none;">
+        <div class="uploadCaution">
+            <p>Be careful with file sizes</p>
+            <p>You can only upload files</p>
+            <p>that are 100 MB or less</p>
+        </div>
+    </div>
+</div>
+<div class="videoContainer">
+    <div class="sampleContainer">
+        <div class="sample-video-wrapper">
+            <video id="videoPreviewer" controls></video>
+            <p>Sample Video</p>
+        </div>
+        <div class="downloadSection" id="downloadSection" style="display: none;">
+            <div class="processing">
+                <img src="{{ url_for('static', filename='images/surprised_cat.png') }}" alt="processingcat">
+                <p id="processingText">processing 0%</p>
+            </div>
+            <button id="downloadButton" class="downloadButton" style="display: none;">Download</button>
+        </div>
+    </div>
+    <div class="outputContainer">
+        <div class="output-video-wrapper">
+            <video id="outputVideo" controls></video>
+            <p>Output Video</p>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

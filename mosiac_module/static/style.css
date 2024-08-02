@@ -1,0 +1,168 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    margin: 0px 40px;
+}
+
+.header p {
+    font-size: 2em;
+}
+
+.uploadContainer {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 40px;
+}
+
+.uploadContainer .text {
+    text-align: left;
+    font-size: 4em;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.uploadContainer p {
+    font-size: 1em;
+    margin: 5px 0;
+}
+
+.uploadSection {
+    flex-direction: column;
+    display: inline-block;
+    margin-top: 3em;
+}
+
+.uploadButton {
+    background-color: #000;
+    color: #fff;
+    padding: 2em 3em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.uploadSection img {
+    position: absolute;
+    width: 8em;
+    height: 8em;
+    left: 64.13em;
+    top: 7.5em;
+}
+
+.uploadButton p {
+    justify-content: center;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.uploadCaution {
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.videoContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.sampleContainer {
+    margin: 1em 2em;
+    padding: 20px;
+}
+
+.outputContainer {
+    margin: 1em 2em;
+    padding: 20px;
+}
+
+.sample-video-wrapper {
+    flex: 1;
+    display: inline-block;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+}
+
+.output-video-wrapper {
+    flex: 1;
+    display: inline-block;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+}
+
+.sample-video-wrapper video {
+    max-width: 100%;
+    height: 15em;
+    display: flex;
+}
+
+.output-video-wrapper video {
+    max-width: 100%;
+    height: 18em;
+    display: flex;
+}
+
+.video-wrapper p {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #666;
+    font-size: 1em;
+}
+
+.downloadSection {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.processing {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.processing img {
+    width: 3em;
+    height: auto;
+    margin-right: 1em;
+    animation: rotate 2s linear infinite;
+}
+
+.processing p {
+    margin: 0;
+    font-size: 1em;
+}
+
+.downloadButton {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+/* Rotation animation */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
