@@ -5,26 +5,23 @@ document.addEventListener('DOMContentLoaded', function () {
     const downloadSection = document.getElementById('downloadSection');
     const downloadButton = document.getElementById('downloadButton');
     const processingText = document.getElementById('processingText');
-    const processingCat = document.querySelector('.processing img');
+    const processingCat = document.getElementById('processingCat');
     const outputVideo = document.getElementById('outputVideo');
 
-    // Upload button click opens file dialog
     uploadButton.addEventListener('click', function () {
         fileInput.click();
     });
 
-    // Display selected video and show download section
     fileInput.addEventListener('change', function (event) {
         const file = event.target.files[0];
         if (file) {
             videoPreview.src = URL.createObjectURL(file);
             videoPreview.style.display = 'block';
-            downloadSection.style.display = 'flex';  // Show download section
+            downloadSection.style.display = 'flex';
             startUpload(file);
         }
     });
 
-    // Upload and process video
     function startUpload(file) {
         const formData = new FormData();
         formData.append('file', file);
@@ -35,25 +32,32 @@ document.addEventListener('DOMContentLoaded', function () {
         xhr.upload.addEventListener('progress', function (event) {
             if (event.lengthComputable) {
                 const percentComplete = (event.loaded / event.total) * 100;
+                console.log(`Uploading ${percentComplete.toFixed(0)}%`);
                 processingText.textContent = `Uploading ${percentComplete.toFixed(0)}%`;
             }
         });
 
         xhr.onreadystatechange = function () {
+            console.log(`ReadyState: ${xhr.readyState}, Status: ${xhr.status}`);
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
-                    // Change text to "Processing" and start polling for progress
+                    console.log('Upload complete. Starting processing...');
                     processingText.textContent = 'Processing 0%';
-                    processingCat.classList.add('rotating'); // Start rotating the cat image
+                    processingCat.classList.add('rotating');
                     checkProgress();
+                } else {
+                    console.error(`Upload failed with status ${xhr.status}: ${xhr.statusText}`);
                 }
             }
+        };
+
+        xhr.onerror = function() {
+            console.error('Upload request failed.');
         };
 
         xhr.send(formData);
     }
 
-    // Check progress of video processing
     function checkProgress() {
         const interval = setInterval(function () {
             const xhr = new XMLHttpRequest();
@@ -64,46 +68,45 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (xhr.status === 200) {
                         const response = JSON.parse(xhr.responseText);
                         const progress = response.progress;
-
+                        console.log(`Processing ${progress.toFixed(0)}%`);
                         processingText.textContent = `Processing ${progress.toFixed(0)}%`;
 
                         if (progress >= 100) {
                             clearInterval(interval);
                             processingText.textContent = 'Processing 100%';
-                            processingCat.classList.remove('rotating'); // Stop rotating the cat image
-                            downloadButton.style.display = 'block';
+                            processingCat.classList.remove('rotating');
+                            processingText.classList.add('fade-out');
+                            setTimeout(() => {
+                                processingText.style.display = 'none';
+                                downloadButton.classList.add('fade-in');
+                                downloadButton.style.display = 'block';
+                            }, 1000);
+
                             downloadButton.addEventListener('click', function () {
-                                window.location.href = '/download';
+                                window.location.href = '/download'; // 파일 다운로드
                             });
 
-                            // Fetch the processed video and display it
-                            fetchProcessedVideo();
+                            displayProcessedVideo();
                         }
+                    } else {
+                        console.error(`Progress check failed with status ${xhr.status}: ${xhr.statusText}`);
                     }
                 }
             };
 
+            xhr.onerror = function() {
+                console.error('Progress request failed.');
+            };
+
             xhr.send();
-        }, 1000); // 1초마다 진행률을 확인합니다.
+        }, 1000);
     }
 
-    // Fetch the processed video and display it
-    function fetchProcessedVideo() {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', '/download', true);
-        xhr.responseType = 'blob';
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    const blob = xhr.response;
-                    const url = URL.createObjectURL(blob);
-                    outputVideo.src = url;
-                    outputVideo.style.display = 'block';
-                }
-            }
-        };
-
-        xhr.send();
+    function displayProcessedVideo() {
+        const videoUrl = '/static/uploads/output.mp4'; // 서버의 비디오 파일 절대 경로
+        console.log(`Setting video source to: ${videoUrl}`); // 로그 추가
+        outputVideo.src = videoUrl;
+        outputVideo.style.display = 'block';
+        console.log('Video should now be visible'); // 로그 추가
     }
 });

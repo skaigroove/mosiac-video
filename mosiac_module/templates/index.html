@@ -21,7 +21,7 @@
         <p>Upload your Video!</p>
     </div>
     <div class="uploadSection">
-        <img src="{{ url_for('static', filename='images/lying_cat.png') }}" alt="cat">
+        <img id="lyingCat" src="{{ url_for('static', filename='images/lying_cat.png') }}" alt="cat">
         <div class="uploadButton">
             <p>Upload Video</p>
         </div>
@@ -37,11 +37,10 @@
     <div class="sampleContainer">
         <div class="sample-video-wrapper">
             <video id="videoPreviewer" controls></video>
-            <p>Sample Video</p>
         </div>
         <div class="downloadSection" id="downloadSection" style="display: none;">
             <div class="processing">
-                <img src="{{ url_for('static', filename='images/surprised_cat.png') }}" alt="processingcat">
+                <img class="processingCat" id="processingCat" src="{{ url_for('static', filename='images/surprised_cat.png') }}" alt="processingcat">
                 <p id="processingText">processing 0%</p>
             </div>
             <button id="downloadButton" class="downloadButton" style="display: none;">Download</button>
@@ -49,8 +48,7 @@
     </div>
     <div class="outputContainer">
         <div class="output-video-wrapper">
-            <video id="outputVideo" controls></video>
-            <p>Output Video</p>
+            <video class="outputVideo" id="outputVideo" controls></video>
         </div>
     </div>
 </div>

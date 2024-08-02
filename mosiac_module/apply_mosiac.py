@@ -2,6 +2,7 @@ from flask import Flask, request, send_file, render_template, jsonify
 import cv2
 from ultralytics import YOLO
 import os
+from threading import Thread
 
 app = Flask(__name__)
 
@@ -38,16 +39,23 @@ def process_video(file_path, output_path='static/uploads/output.mp4'):
         processed_frames += 1
 
         # 프로세싱 진행률 업데이트
-        progress = (processed_frames / frame_count) * 100
+        progress_percent = (processed_frames / frame_count) * 100
+        # 프로세싱 진행률 반올림
+        progress = int(round(progress_percent, 0))
+
+        print("progress: ", progress, "%, ", "frame_count: ", frame_count, ", processed_frames: ", processed_frames)
 
     cap.release()
     out.release()
     progress = 100  # 완료되면 100%로 설정
+    print(f"Processing complete. Output saved to {output_path}")  # 출력 파일 경로 로그 출력
     return output_path
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/process', methods=['POST'])
 def process_file():
@@ -64,17 +72,30 @@ def process_file():
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     file.save(file_path)
 
-    output_path = process_video(file_path)
-    return jsonify({'success': True})
+    # 비디오 처리 함수를 별도의 스레드에서 비동기로 실행
+    thread = Thread(target=process_video, args=(file_path,))
+    thread.start()
+
+    return jsonify({'success': True}), 200  # 업로드 완료 후 즉시 200 상태 반환
+
 
 @app.route('/progress', methods=['GET'])
 def get_progress():
     global progress
     return jsonify({'progress': progress})
 
+
 @app.route('/download', methods=['GET'])
 def download_file():
-    return send_file('static/uploads/output.mp4', as_attachment=True, mimetype='video/mp4', download_name='processed_video.mp4')
+    file_path = 'static/uploads/output.mp4'
+    download = 'processed_video.mp4'
+    if os.path.exists(file_path):
+        print(f"Serving file from {file_path}")  # 파일 경로 로그 출력
+        return send_file(file_path, as_attachment=True, mimetype='video/mp4', download_name=download)
+    else:
+        print(f"File not found: {file_path}")  # 파일이 없을 때 로그 출력
+        return "File not found", 404
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
