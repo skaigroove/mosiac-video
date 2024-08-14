@@ -7,7 +7,7 @@ from threading import Thread
 app = Flask(__name__)
 
 # yolov8n 모델 로드
-model = YOLO('/Users/skaigroove/WorkSpace/mosiac_module/models/best.pt')
+model = YOLO("C:/Users/user/IdeaProjects/mosiac-video/mosiac_module/models/best.pt")
 
 # 전역 변수로 진행률을 저장합니다.
 progress = 0
@@ -15,7 +15,8 @@ progress = 0
 def process_video(file_path, output_path='static/uploads/output.mp4'):
     global progress
     cap = cv2.VideoCapture(file_path)
-    fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # 코덱 설정
+    fourcc = cv2.VideoWriter_fourcc(*'x264')  # 코덱 설정
+    # fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # 코덱 설정
     out = cv2.VideoWriter(output_path, fourcc, 20.0, (int(cap.get(3)), int(cap.get(4))))
 
     frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
